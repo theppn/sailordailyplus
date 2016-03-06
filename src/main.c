@@ -25,6 +25,8 @@ static GBitmap *s_active_connection_bitmap7;
 static GBitmap *s_active_connection_bitmap8;
 static GBitmap *s_inactive_connection_bitmap;
 static int current_theme;
+static int last_phone_battery_value;
+static int coinflip;
 
 // imported method to manage smartwatch+ stuff
 static uint32_t s_sequence_number = 0xFFFFFFFE;
@@ -95,6 +97,14 @@ void rcv(DictionaryIterator *received, void *context) {
 	t=dict_find(received, SM_COUNT_BATTERY_KEY); 
 	if (t!=NULL) {
     phoneBatteryPercent = t->value->uint8;
+    // alert for fully charged or low phone battery
+    if ((phoneBatteryPercent == 100 && last_phone_battery_value == 99) || (phoneBatteryPercent == 20 && last_phone_battery_value == 21)) {
+      vibes_double_pulse();
+    }
+    else if ((phoneBatteryPercent == 80 && last_phone_battery_value == 79) || (phoneBatteryPercent == 40 && last_phone_battery_value == 41)) {
+      vibes_short_pulse();
+    }
+    last_phone_battery_value = t->value->uint8;
     snprintf(phone_battery_text, sizeof(phone_battery_text), "%d", phoneBatteryPercent);
     text_layer_set_text(s_phone_battery_layer, phone_battery_text);
 	}
@@ -119,7 +129,7 @@ static void handle_bluetooth(bool connected) {
   else {
     bitmap_layer_set_bitmap(s_connection_layer, s_inactive_connection_bitmap);  
   }
-  //vibes_short_pulse();
+  vibes_short_pulse();
 }
 
 // Time updater
@@ -144,6 +154,7 @@ static void update_time() {
 // Change theme according to current theme value
 static void change_theme(bool forcechange) {
   // Get background and active connection icon acccording to day or according to current theme settings
+  coinflip = rand()%2;
   if (!forcechange) {
     // Get a tm structure
     time_t temp = time(NULL); 
@@ -155,47 +166,104 @@ static void change_theme(bool forcechange) {
   }
   if (current_theme == 0) {
     gbitmap_destroy(s_background_bitmap);
-    s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_SUNDAY);
+    if (coinflip == 0) {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_SUNDAY);
+    }
+    else {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_SUNDAY2);
+    }
     s_active_connection_bitmap = s_active_connection_bitmap0;
   }
   else if (current_theme == 1) {
     gbitmap_destroy(s_background_bitmap);
-    s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_MONDAY);
+    if (coinflip == 0) {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_MONDAY);
+    }
+    else {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_MONDAY2);
+    }
     s_active_connection_bitmap = s_active_connection_bitmap1;
   }
   else if (current_theme == 2) {
     gbitmap_destroy(s_background_bitmap);
-    s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_TUESDAY);
+    if (coinflip == 0) {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_TUESDAY);
+    }
+    else {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_TUESDAY2);
+    }
     s_active_connection_bitmap = s_active_connection_bitmap2;
   }
   else if (current_theme == 3) {
     gbitmap_destroy(s_background_bitmap);
-    s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_WEDNESDAY);
+    if (coinflip == 0) {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_WEDNESDAY);
+    }
+    else {
+      coinflip = rand()%2;
+      if (coinflip == 0) {
+        s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_WEDNESDAY2);
+      }
+      else {
+        s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_WEDNESDAY3);
+      }
+    }
     s_active_connection_bitmap = s_active_connection_bitmap3;
   }
   else if (current_theme == 4) {
     gbitmap_destroy(s_background_bitmap);
-    s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_THURSDAY);
+    if (coinflip == 0) {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_THURSDAY);
+    }
+    else {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_THURSDAY2);
+    }
     s_active_connection_bitmap = s_active_connection_bitmap4;
   }
   else if (current_theme == 5) {
     gbitmap_destroy(s_background_bitmap);
-    s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_FRIDAY);
+    if (coinflip == 0) {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_FRIDAY);
+    }
+    else {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_FRIDAY2);
+    }
     s_active_connection_bitmap = s_active_connection_bitmap5;
   }
   else if (current_theme == 6) {    
     gbitmap_destroy(s_background_bitmap);
-    s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_SATURDAY);
+    if (coinflip == 0) {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_SATURDAY);
+    }
+    else {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_SATURDAY2);
+    }
     s_active_connection_bitmap = s_active_connection_bitmap6;
   }
   else if (current_theme == 7) {    
     gbitmap_destroy(s_background_bitmap);
-    s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_CHIBI);
+    if (coinflip == 0) {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_CHIBI);
+    }
+    else {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_CHIBI2);
+    }
     s_active_connection_bitmap = s_active_connection_bitmap7;
   }
   else if (current_theme == 8) {    
     gbitmap_destroy(s_background_bitmap);
-    s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_URANEP);
+    if (coinflip == 0) {
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_URANEP);
+    }
+    else {
+      coinflip = rand()%2;
+      if (coinflip == 0) {
+        s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_URANEP2);
+      }
+      else {
+        s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_URANEP3);
+      }
+    }
     s_active_connection_bitmap = s_active_connection_bitmap8;
   }
   if (bluetooth_connection_service_peek()) {
@@ -225,9 +293,23 @@ static void update_date() {
 
 // Tap handler to force theme change
 static void tap_handler(AccelAxisType axis, int32_t direction) {
-  current_theme++;
+  switch (axis) {
+  case ACCEL_AXIS_X:
+  case ACCEL_AXIS_Y:
+    break;
+  case ACCEL_AXIS_Z:
+    if (direction > 0) {
+      current_theme++;
+    } else {
+      current_theme--;
+    }
+    break;
+  }
   if (current_theme > 8) {
     current_theme = 0;  
+  }
+  else if (current_theme < 0) {
+    current_theme = 8;  
   }
   change_theme(true);
 }
@@ -283,40 +365,40 @@ static void main_window_load(Window *window) {
   text_layer_set_background_color(s_battery_layer, GColorClear);
   text_layer_set_font(s_battery_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
   text_layer_set_text_alignment(s_battery_layer, GTextAlignmentRight);
-  text_layer_set_text(s_battery_layer, "100%");
+  text_layer_set_text(s_battery_layer, "-");
   handle_battery(battery_state_service_peek());
   
   // Create mail count TextLayer
-  s_mail_count_layer = text_layer_create(GRect(8, 152, 20, 19));
+  s_mail_count_layer = text_layer_create(GRect(13, 154, 20, 15));
   text_layer_set_text_color(s_mail_count_layer, GColorWhite);
   text_layer_set_background_color(s_mail_count_layer, GColorClear);
   text_layer_set_font(s_mail_count_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
-  text_layer_set_text_alignment(s_mail_count_layer, GTextAlignmentCenter);
-  text_layer_set_text(s_mail_count_layer, "99");
+  text_layer_set_text_alignment(s_mail_count_layer, GTextAlignmentLeft);
+  text_layer_set_text(s_mail_count_layer, "-");
   
   // Create sms count TextLayer
-  s_sms_count_layer = text_layer_create(GRect(45, 152, 20, 19));
+  s_sms_count_layer = text_layer_create(GRect(50, 154, 20, 15));
   text_layer_set_text_color(s_sms_count_layer, GColorWhite);
   text_layer_set_background_color(s_sms_count_layer, GColorClear);
   text_layer_set_font(s_sms_count_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
-  text_layer_set_text_alignment(s_sms_count_layer, GTextAlignmentCenter);
-  text_layer_set_text(s_sms_count_layer, "99");
+  text_layer_set_text_alignment(s_sms_count_layer, GTextAlignmentLeft);
+  text_layer_set_text(s_sms_count_layer, "-");
   
   // Create phone count TextLayer
-  s_phone_count_layer = text_layer_create(GRect(80, 152, 20, 19));
+  s_phone_count_layer = text_layer_create(GRect(87, 154, 20, 15));
   text_layer_set_text_color(s_phone_count_layer, GColorWhite);
   text_layer_set_background_color(s_phone_count_layer, GColorClear);
   text_layer_set_font(s_phone_count_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
-  text_layer_set_text_alignment(s_phone_count_layer, GTextAlignmentCenter);
-  text_layer_set_text(s_phone_count_layer, "99");
+  text_layer_set_text_alignment(s_phone_count_layer, GTextAlignmentLeft);
+  text_layer_set_text(s_phone_count_layer, "-");
   
   // Create phone battery TextLayer
-  s_phone_battery_layer = text_layer_create(GRect(117, 152, 20, 19));
+  s_phone_battery_layer = text_layer_create(GRect(124, 154, 20, 15));
   text_layer_set_text_color(s_phone_battery_layer, GColorWhite);
   text_layer_set_background_color(s_phone_battery_layer, GColorClear);
   text_layer_set_font(s_phone_battery_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
-  text_layer_set_text_alignment(s_phone_battery_layer, GTextAlignmentCenter);
-  text_layer_set_text(s_phone_battery_layer, "100%");
+  text_layer_set_text_alignment(s_phone_battery_layer, GTextAlignmentLeft);
+  text_layer_set_text(s_phone_battery_layer, "-");
   
   // Create connection BitmapLayer
   s_active_connection_bitmap = s_active_connection_bitmap1;
@@ -324,7 +406,7 @@ static void main_window_load(Window *window) {
   bitmap_layer_set_bitmap(s_connection_layer, s_active_connection_bitmap);  
   
   // Create bar BitmapLayer
-  s_bar_layer = bitmap_layer_create(GRect(0, 148, 144, 20));
+  s_bar_layer = bitmap_layer_create(GRect(0, 158, 144, 10));
   bitmap_layer_set_bitmap(s_bar_layer, s_bar_bitmap);  
 
   // Improving layout
@@ -366,6 +448,7 @@ static void main_window_unload(Window *window) {
 
 // Init
 static void init() {
+  last_phone_battery_value = 0;
   // Loading assets
   s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_MONDAY);
   s_bar_bitmap = gbitmap_create_with_resource(RESOURCE_ID_SM_BAR);

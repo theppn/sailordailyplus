@@ -6,109 +6,178 @@
         ""
     ],
     "companyName": "the_ppn@hotmail.com",
+    "enableMultiJS": false,
     "longName": "Sailor Daily Plus",
     "projectType": "native",
     "resources": {
         "media": [
             {
+                "file": "images/wednesday3.png",
+                "name": "BG_WEDNESDAY3",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/wednesday2.png",
+                "name": "BG_WEDNESDAY2",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/uranep3.png",
+                "name": "BG_URANEP3",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/uranep2.png",
+                "name": "BG_URANEP2",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/tuesday2.png",
+                "name": "BG_TUESDAY2",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/thursday2.png",
+                "name": "BG_THURSDAY2",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/sunday2.png",
+                "name": "BG_SUNDAY2",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/saturday2.png",
+                "name": "BG_SATURDAY2",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/monday2.png",
+                "name": "BG_MONDAY2",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/friday2.png",
+                "name": "BG_FRIDAY2",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/chibi2.png",
+                "name": "BG_CHIBI2",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
                 "file": "images/smbar.png",
                 "name": "SM_BAR",
-                "type": "png"
+                "targetPlatforms": null,
+                "type": "bitmap"
             },
             {
                 "file": "images/wednesday.png",
                 "name": "BG_WEDNESDAY",
-                "type": "png"
+                "targetPlatforms": null,
+                "type": "bitmap"
             },
             {
                 "file": "images/tuesday.png",
                 "name": "BG_TUESDAY",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/thursday.png",
                 "name": "BG_THURSDAY",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/sunday.png",
                 "name": "BG_SUNDAY",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/saturday.png",
                 "name": "BG_SATURDAY",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/monday.png",
                 "name": "BG_MONDAY",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/friday.png",
                 "name": "BG_FRIDAY",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/chibi.png",
                 "name": "BG_CHIBI",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/bg_uranep.png",
                 "name": "BG_URANEP",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/b_uranep.png",
                 "name": "B_URANEP",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/b_chibi.png",
                 "name": "B_CHIBI",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/b_none.png",
                 "name": "B_NONE",
-                "type": "png"
-            },
-            {
-                "file": "images/b_tuesday.png",
-                "name": "B_TUESDAY",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/b_wednesday.png",
                 "name": "B_WEDNESDAY",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/b_thursday.png",
                 "name": "B_THURSDAY",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/b_sunday.png",
                 "name": "B_SUNDAY",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/b_saturday.png",
                 "name": "B_SATURDAY",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/b_monday.png",
                 "name": "B_MONDAY",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/b_friday.png",
                 "name": "B_FRIDAY",
-                "type": "png"
+                "type": "bitmap"
+            },
+            {
+                "file": "images/b_tuesday.png",
+                "name": "B_TUESDAY",
+                "type": "bitmap"
             }
         ]
     },
