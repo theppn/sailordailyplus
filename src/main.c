@@ -26,7 +26,6 @@ static GBitmap *s_active_connection_bitmap8;
 static GBitmap *s_inactive_connection_bitmap;
 static int current_theme;
 static int last_phone_battery_value;
-static int coinflip;
 
 // imported method to manage smartwatch+ stuff
 static uint32_t s_sequence_number = 0xFFFFFFFE;
@@ -154,7 +153,6 @@ static void update_time() {
 // Change theme according to current theme value
 static void change_theme(bool forcechange) {
   // Get background and active connection icon acccording to day or according to current theme settings
-  coinflip = rand()%2;
   if (!forcechange) {
     // Get a tm structure
     time_t temp = time(NULL); 
@@ -162,110 +160,100 @@ static void change_theme(bool forcechange) {
     // Create a long-lived buffer
     char buffer3[] = "1";
     strftime(buffer3, sizeof(buffer3), "%w", tick_time);
-    current_theme = atoi(buffer3);
+    current_theme = SM_THEME_GROUP_SIZE*atoi(buffer3)+rand()%3;
   }
-  if (current_theme == 0) {
-    gbitmap_destroy(s_background_bitmap);
-    if (coinflip == 0) {
+  gbitmap_destroy(s_background_bitmap);
+  switch (current_theme) {
+    case 0:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_SUNDAY);
-    }
-    else {
+      s_active_connection_bitmap = s_active_connection_bitmap0;
+    break;    
+    case 1:
+    case 2:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_SUNDAY2);
-    }
-    s_active_connection_bitmap = s_active_connection_bitmap0;
-  }
-  else if (current_theme == 1) {
-    gbitmap_destroy(s_background_bitmap);
-    if (coinflip == 0) {
+      s_active_connection_bitmap = s_active_connection_bitmap0;
+    break;
+    default:
+    case 3:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_MONDAY);
-    }
-    else {
+      s_active_connection_bitmap = s_active_connection_bitmap1;
+    break;
+    case 4:
+    case 5:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_MONDAY2);
-    }
-    s_active_connection_bitmap = s_active_connection_bitmap1;
-  }
-  else if (current_theme == 2) {
-    gbitmap_destroy(s_background_bitmap);
-    if (coinflip == 0) {
+      s_active_connection_bitmap = s_active_connection_bitmap1;
+    break;
+    case 6:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_TUESDAY);
-    }
-    else {
+      s_active_connection_bitmap = s_active_connection_bitmap2;
+    break;
+    case 7:
+    case 8:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_TUESDAY2);
-    }
-    s_active_connection_bitmap = s_active_connection_bitmap2;
-  }
-  else if (current_theme == 3) {
-    gbitmap_destroy(s_background_bitmap);
-    if (coinflip == 0) {
+      s_active_connection_bitmap = s_active_connection_bitmap2;
+    break;
+    case 9:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_WEDNESDAY);
-    }
-    else {
-      coinflip = rand()%2;
-      if (coinflip == 0) {
-        s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_WEDNESDAY2);
-      }
-      else {
-        s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_WEDNESDAY3);
-      }
-    }
-    s_active_connection_bitmap = s_active_connection_bitmap3;
-  }
-  else if (current_theme == 4) {
-    gbitmap_destroy(s_background_bitmap);
-    if (coinflip == 0) {
+      s_active_connection_bitmap = s_active_connection_bitmap3;
+    break;
+    case 10:
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_WEDNESDAY2);
+      s_active_connection_bitmap = s_active_connection_bitmap3;
+    break;
+    case 11:
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_WEDNESDAY3);
+      s_active_connection_bitmap = s_active_connection_bitmap3;
+    break;
+    case 12:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_THURSDAY);
-    }
-    else {
+      s_active_connection_bitmap = s_active_connection_bitmap4;
+    break;
+    case 13:
+    case 14:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_THURSDAY2);
-    }
-    s_active_connection_bitmap = s_active_connection_bitmap4;
-  }
-  else if (current_theme == 5) {
-    gbitmap_destroy(s_background_bitmap);
-    if (coinflip == 0) {
+      s_active_connection_bitmap = s_active_connection_bitmap4;
+    break;    
+    case 15:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_FRIDAY);
-    }
-    else {
+      s_active_connection_bitmap = s_active_connection_bitmap5;
+    break;
+    case 16:
+    case 17:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_FRIDAY2);
-    }
-    s_active_connection_bitmap = s_active_connection_bitmap5;
-  }
-  else if (current_theme == 6) {    
-    gbitmap_destroy(s_background_bitmap);
-    if (coinflip == 0) {
+      s_active_connection_bitmap = s_active_connection_bitmap5;
+    break;    
+    case 18:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_SATURDAY);
-    }
-    else {
+      s_active_connection_bitmap = s_active_connection_bitmap6;
+    break;
+    case 19:
+    case 20:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_SATURDAY2);
-    }
-    s_active_connection_bitmap = s_active_connection_bitmap6;
-  }
-  else if (current_theme == 7) {    
-    gbitmap_destroy(s_background_bitmap);
-    if (coinflip == 0) {
+      s_active_connection_bitmap = s_active_connection_bitmap6;
+    break;    
+    case 21:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_CHIBI);
-    }
-    else {
+      s_active_connection_bitmap = s_active_connection_bitmap7;
+    break;
+    case 22:
+    case 23:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_CHIBI2);
-    }
-    s_active_connection_bitmap = s_active_connection_bitmap7;
-  }
-  else if (current_theme == 8) {    
-    gbitmap_destroy(s_background_bitmap);
-    if (coinflip == 0) {
+      s_active_connection_bitmap = s_active_connection_bitmap7;
+    break;    
+    case 24:
       s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_URANEP);
-    }
-    else {
-      coinflip = rand()%2;
-      if (coinflip == 0) {
-        s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_URANEP2);
-      }
-      else {
-        s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_URANEP3);
-      }
-    }
-    s_active_connection_bitmap = s_active_connection_bitmap8;
-  }
+      s_active_connection_bitmap = s_active_connection_bitmap8;
+    break;
+    case 25:
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_URANEP2);
+      s_active_connection_bitmap = s_active_connection_bitmap8;
+    break;
+    case 26:
+      s_background_bitmap = gbitmap_create_with_resource(RESOURCE_ID_BG_URANEP3);
+      s_active_connection_bitmap = s_active_connection_bitmap8;
+    break;
+  } 
+  bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap);
   if (bluetooth_connection_service_peek()) {
     bitmap_layer_set_bitmap(s_connection_layer, s_active_connection_bitmap);
     bitmap_layer_set_bitmap(s_background_layer, s_background_bitmap);
@@ -298,19 +286,9 @@ static void tap_handler(AccelAxisType axis, int32_t direction) {
   case ACCEL_AXIS_Y:
     break;
   case ACCEL_AXIS_Z:
-    if (direction > 0) {
-      current_theme++;
-    } else {
-      current_theme--;
-    }
+    current_theme = rand()%SM_MAX_NB_THEME-1;    
     break;
-  }
-  if (current_theme > 8) {
-    current_theme = 0;  
-  }
-  else if (current_theme < 0) {
-    current_theme = 8;  
-  }
+  }  
   change_theme(true);
 }
 

@@ -1,5 +1,8 @@
 #ifndef _main_h
 #define _main_h
+
+#define SM_MAX_NB_THEME  27
+#define SM_THEME_GROUP_SIZE  3
   
 #define SM_RECONNECT_KEY 			0xFC01
 #define SM_SEQUENCE_NUMBER_KEY 		0xFC02
